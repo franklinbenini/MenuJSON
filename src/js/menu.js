@@ -1,31 +1,19 @@
-var data = {
-    menu: [
-        {id: '0', descricao: 'MENU 0', acao: null, submenu:[
-            {descricao: 'menuitem 0-0',link: '0-0', acao: null, submenu: null},
-            {descricao: 'menuitem 0-1',link: '0-1', acao: null, submenu: null},
-            {descricao: 'menuitem 0-2',link: '0-2', acao: null, submenu: null}
-            ]
-        },
-        {id: '1', descricao: 'MENU 1', acao: null, submenu: null},
-        {id: '2', descricao: 'MENU 2', acao: null, submenu: [
-            {descricao: 'menuitem 2-0',link: '2-0', acao: null, submenu: null},
-            {descricao: 'menuitem 2-1',link: '2-1', acao: null, submenu: null},
-            {descricao: 'menuitem 2-2',link: '2-2', acao: null, submenu:[
-                {descricao: 'menuitem 2-2-0',link: '2-2-0', acao: null, submenu: null},
-                {descricao: 'menuitem 2-2-1',link: '2-2-1', acao: null, submenu: null},
-                {descricao: 'menuitem 2-2-2',link: '2-2-2', acao: null, submenu: null},
-                {descricao: 'menuitem 2-2-3',link: '2-2-3', acao: null, submenu: null},
-                {descricao: 'menuitem 2-2-4',link: '2-2-4', acao: null, submenu: null},
-                {descricao: 'menuitem 2-2-5',link: '2-2-5', acao: null, submenu: null},
-                {descricao: 'menuitem 2-2-6',link: '2-2-6', acao: null, submenu: null}
-            ]},
-            {descricao: 'menuitem 2-3',link: '2-3', acao: null, submenu: null},
-            {descricao: 'menuitem 2-4',link: '2-4', acao: null, submenu: null},
-            {descricao: 'menuitem 2-5',link: '2-5', acao: null, submenu: null}
-            ]
-        },
-        {id: '3', descricao: 'MENU 3', acao: null, submenu: null}
-    ]
+/*
+    Atenção: Não funciona para testes em máquina local no Chrome / IE. Só no firefox
+    No Chrome / IE só funciona depois de hospedado em um webserver.
+*/
+function carregaArquivoJSON(path, callback) {
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.onreadystatechange = function() {
+        if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {                
+                var data = JSON.parse(httpRequest.responseText);
+                if (callback) callback(data);
+            }
+        }
+    };
+    httpRequest.open('GET', path);
+    httpRequest.send(); 
 }
 
 function montaMenu(data, issubmenu){
@@ -50,5 +38,10 @@ function montaMenu(data, issubmenu){
     return html;
 }
 
-var html = montaMenu(data.menu, false);
-document.getElementById('divMenu').innerHTML += html;
+function exibeMenu(idDiv)
+{
+    carregaArquivoJSON('src/js/menu.json', function(data){
+        var html = montaMenu(data.menu, false);
+        document.getElementById(idDiv).innerHTML += html;
+    });
+}

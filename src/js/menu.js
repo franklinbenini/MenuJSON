@@ -36,7 +36,6 @@ function montaMenu(data, issubmenu){
     html += '</ul>';
     html += (issubmenu)?'</div>':'';
     return html;
-<<<<<<< HEAD
 }
 
 function exibeMenu(idDiv)
@@ -45,6 +44,4 @@ function exibeMenu(idDiv)
         var html = montaMenu(data.menu, false);
         document.getElementById(idDiv).innerHTML += html;
     });
-=======
->>>>>>> 0202acc839c21022c5b0fbc8d52ab993ae12be28
 }

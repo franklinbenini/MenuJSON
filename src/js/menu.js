@@ -49,6 +49,3 @@ function montaMenu(data, issubmenu){
     html += (issubmenu)?'</div>':'';
     return html;
 }
-
-var html = montaMenu(data.menu, false);
-document.getElementById('divMenu').innerHTML += html;
